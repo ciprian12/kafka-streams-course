@@ -2,6 +2,7 @@
 
 # download kafka at  https://www.apache.org/dyn/closer.cgi?path=/kafka/0.11.0.1/kafka_2.11-0.11.0.1.tgz
 # extract kafka in a folder
+cd ~/tools/kafka_2.11-1.1.0/
 
 ### LINUX / MAC OS X ONLY
 

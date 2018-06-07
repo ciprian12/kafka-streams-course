@@ -20,8 +20,9 @@ public class WordCountApp {
         StreamsBuilder builder = new StreamsBuilder();
         // 1 - stream from Kafka
 
-        KStream<String, String> textLines = builder.stream("word-count-input");
-        KTable<String, Long> wordCounts = textLines
+        KStream<String, String> textLinesStream = builder.stream("word-count-input");
+
+        KTable<String, Long> wordCounts = textLinesStream
                 // 2 - map values to lowercase
                 .mapValues(textLine -> textLine.toLowerCase())
                 // can be alternatively written as:
@@ -42,6 +43,11 @@ public class WordCountApp {
     }
 
     public static void main(String[] args) {
+
+        /*
+            you MUST create topics before running the application
+         */
+
         Properties config = new Properties();
         config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-application");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
@@ -51,8 +57,12 @@ public class WordCountApp {
 
         WordCountApp wordCountApp = new WordCountApp();
 
+        final Topology topo = wordCountApp.createTopology();
         KafkaStreams streams = new KafkaStreams(wordCountApp.createTopology(), config);
         streams.start();
+
+        System.out.println("topology");
+        System.out.println(topo.toString());
 
         // shutdown hook to correctly close the streams application
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));

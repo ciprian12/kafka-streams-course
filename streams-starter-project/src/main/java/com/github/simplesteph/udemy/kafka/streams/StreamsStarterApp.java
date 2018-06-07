@@ -22,7 +22,7 @@ public class StreamsStarterApp {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> kStream = builder.stream("input-topic-name");
+        KStream<String, String> kStream = builder.stream("word-count-input");
         // do stuff
         kStream.to("word-count-output");
 

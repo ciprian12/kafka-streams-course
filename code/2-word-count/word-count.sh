@@ -1,7 +1,15 @@
 #!/bin/bash
 
+cd ~/tools/kafka_2.11-1.1.0/
+
+# list topics
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+
 # create input topic with two partitions
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic word-count-input
+
+# describe topic
+bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic word-count-input
 
 # create output topic
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic word-count-output
